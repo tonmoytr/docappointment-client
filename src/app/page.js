@@ -1,5 +1,6 @@
 import HeroSlider from "@/components/Home/HeroSlider";
 import InfoRibbon from "@/components/Home/InfoRibbon";
+import TopRatedDoctors from "@/components/Home/TopRatedDoctors";
 import { heroSlides } from "@/config/heroData";
 import { infoItems } from "@/config/infoItems";
 
@@ -10,6 +11,7 @@ export default function HomePage() {
       <section className="">
         <HeroSlider slides={heroSlides} />
         <InfoRibbon infoItems={infoItems} />
+        <TopRatedDoctors />
       </section>
     </div>
   );
