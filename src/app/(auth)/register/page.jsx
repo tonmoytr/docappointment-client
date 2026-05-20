@@ -29,7 +29,7 @@ export default function SignUpPage() {
     const { data, error } = await authClient.signUp.email({
       name,
       email,
-      photoUrl,
+      image: photoUrl,
       password,
       callbackURL: "/login",
     });
