@@ -126,8 +126,9 @@ export default async function AllConsultantsPage() {
                       <ArrowUpRightFromSquare className="inline ml-2 mb-1" />
                     </Link>
 
-                    <div className="flex items-center space-x-3 text-zinc-300 dark:text-zinc-600">
-                      <a
+                    <div className="flex items-center space-x-3 text-[#ff6b35] dark:text-[#ff6b35]/80">
+                      <strong className=""> ৳ {doctor?.fee}</strong>
+                      {/* <a
                         href="#"
                         className="hover:text-zinc-500 transition-colors"
                       >
@@ -144,7 +145,7 @@ export default async function AllConsultantsPage() {
                         className="hover:text-zinc-500 transition-colors"
                       >
                         <FaLinkedinIn size={12} />
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                 </div>
