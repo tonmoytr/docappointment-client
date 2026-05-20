@@ -81,7 +81,7 @@ export default async function TopRatedDoctors() {
         {/* --- DOCKING ELEMENT: The Intersecting Horizontal Center Button --- */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30">
           <Link
-            href="/all-consultants"
+            href="/consultants"
             className="bg-teal-500 hover:bg-teal-600 text-white font-bold tracking-widest uppercase text-[11px] px-8 py-3.5 shadow-md hover:shadow-lg transition-all duration-300 block active:scale-95"
           >
             Find Out More
