@@ -74,14 +74,14 @@ export default function HeroSlider({ slides }) {
                   <div className="flex flex-wrap items-center gap-4 pt-2">
                     <Link
                       href="/appointments"
-                      className="inline-flex items-center space-x-2.5 bg-accent hover:bg-accent/90 dark:bg-warning dark:text-black dark:hover:bg-warning/90 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-accent/20 transition-all transform active:scale-98 group cursor-pointer"
+                      className="inline-flex items-center space-x-2.5 bg-accent hover:bg-accent/90 dark:bg-warning dark:text-black dark:hover:bg-warning/90 text-white font-semibold px-6 py-3 shadow-lg shadow-accent/20 transition-all transform active:scale-98 group cursor-pointer"
                     >
                       <span>Browse Doctors</span>
                       <HiArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                     <Link
                       href="/dashboard/my-bookings"
-                      className="inline-flex items-center space-x-2.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md text-white font-semibold px-6 py-3 rounded-xl transition-all transform active:scale-98 cursor-pointer"
+                      className="inline-flex items-center space-x-2.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md text-white font-semibold px-6 py-3 transition-all transform active:scale-98 cursor-pointer"
                     >
                       <span>My Bookings</span>
                     </Link>

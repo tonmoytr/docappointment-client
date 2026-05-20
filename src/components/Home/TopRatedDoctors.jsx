@@ -22,7 +22,7 @@ export default async function TopRatedDoctors() {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 3);
   // Pulling Doctor 1 dynamically to populate the premium featured header segment
-  const featuredDoctor = topRatedDoctors[0] || {
+  const featuredDoctor = doctors[6] || {
     name: "Dr. Stephanie Wosniack",
     specialty: "Chief Medical Officer",
     image:
@@ -31,10 +31,12 @@ export default async function TopRatedDoctors() {
       "Dr. Stephanie Wosniack is dedicated to providing her patients with the best possible care. We at MediCare are focused on helping you. After receiving successful care for various aches and pains over the years, Dr. Wosniack found her calling to help others get well.",
   };
 
+  console.log("helooooooooooooooooooooooo", featuredDoctor);
+
   return (
     <section className="w-full font-sans antialiased bg-default-50 transition-colors duration-200">
       {/* --- PART 1: TOP FEATURED INTRO BANNER (EXACT PATTERN MATCH) --- */}
-      <div className="w-full bg-[#EAEAEA] dark:bg-zinc-900 border-b border-zinc-300 dark:border-zinc-800 pt-16 pb-0 relative">
+      <div className="w-full bg-[#EAEAEA] dark:bg-zinc-900 border-b border-zinc-300 dark:border-zinc-800 py-8 pb-0 relative">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           {/* Left Descriptive Grid Typography Column */}
           <div className="md:col-span-7 space-y-5 pb-12 md:pb-16 animate-fadeIn">
@@ -50,8 +52,12 @@ export default async function TopRatedDoctors() {
               OUR <span className="text-teal-500 font-bold">TEAM</span>
             </h2>
 
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl font-light">
-              {featuredDoctor.description}
+            <p className="text-medium text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl font-light">
+              {featuredDoctor.name} is is dedicated to providing her patients
+              with the best possible care. We at MediCare are focused on helping
+              you. After receiving successful care for various aches and pains
+              over the years, Dr. Woshiack found her calling to help others get
+              well.
             </p>
 
             {/* Custom SVG/Cursive Design Emulation signature box */}
@@ -63,17 +69,21 @@ export default async function TopRatedDoctors() {
           </div>
 
           {/* Right Column: Grounded portrait layout composition */}
-          <div className="hidden md:col-span-5 md:flex h-full items-end justify-center overflow-visible relative">
-            <div className="relative w-full max-w-[340px] aspect-[4/5] self-end origin-bottom transform translate-y-[1px]">
-              <Image
-                unoptimized
-                src={featuredDoctor.image}
-                alt={featuredDoctor.name}
-                fill
-                priority
-                sizes="340px"
-                className="object-contain object-bottom"
-              />
+          {/* Right Column: Dynamic Portrait Frame Wrapper */}
+          <div className="hidden md:col-span-5 md:flex h-full items-center justify-center overflow-visible relative px-4">
+            <div className="relative w-full max-w-[420px] aspect-[4/5] bg-white dark:bg-zinc-800 p-3 border border-zinc-300 dark:border-zinc-700 shadow-md transform hover:scale-[1.02] transition-transform duration-300 ease-out">
+              {/* Clean Interior Matting Border Frame */}
+              <div className="relative w-full h-full border border-zinc-200 dark:border-zinc-600 overflow-hidden bg-zinc-50 dark:bg-zinc-900">
+                <Image
+                  unoptimized
+                  src={featuredDoctor.image}
+                  alt={featuredDoctor.name}
+                  fill
+                  priority
+                  sizes="(max-w-1024px) 340px, 420px"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-103"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -102,7 +112,7 @@ export default async function TopRatedDoctors() {
               return (
                 <div
                   key={doctor._id}
-                  className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-sm transition-all duration-300 rounded-none group flex flex-col h-full relative"
+                  className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-[0_10px_30px_rgba(20,184,166,0.12)] hover:shadow-[0_15px_40px_rgba(20,184,166,0.25)] hover:-translate-y-2 transition-all duration-300 rounded-none group flex flex-col h-full relative"
                 >
                   {/* 1. Portrait Image Container */}
                   <div className="relative w-full aspect-[11/10] bg-[#F7F7F7] dark:bg-zinc-800 overflow-hidden shrink-0">

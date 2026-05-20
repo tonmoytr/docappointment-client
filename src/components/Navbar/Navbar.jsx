@@ -37,7 +37,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/register"
-            className="text-sm font-medium text-white bg-[#0A7C6E] hover:bg-[#0A7C6E]/90 dark:bg-[#F59E0B] dark:text-black dark:hover:bg-[#F59E0B]/90 px-4 py-2 rounded-lg shadow-sm transition-all"
+            className="text-sm font-medium text-white bg-[#0A7C6E] hover:bg-[#0A7C6E]/90 dark:bg-[#F59E0B] dark:text-black dark:hover:bg-[#F59E0B]/90 px-4 py-2 shadow-sm transition-all"
           >
             Register
           </Link>

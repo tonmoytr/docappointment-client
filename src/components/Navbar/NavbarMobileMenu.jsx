@@ -55,7 +55,7 @@ export default function NavbarMobileMenu({ links }) {
               <Link
                 href="/register"
                 onClick={() => setIsOpen(false)}
-                className="w-full text-center py-2 text-sm font-medium text-white bg-[#0A7C6E] hover:bg-[#0A7C6E]/90 rounded-lg shadow-sm transition-all"
+                className="w-full text-center py-2 text-sm font-medium text-white bg-[#0A7C6E] hover:bg-[#0A7C6E]/90 shadow-sm transition-all"
               >
                 Register
               </Link>
