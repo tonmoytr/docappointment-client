@@ -1,8 +1,10 @@
 // src/app/register/page.jsx
 "use client";
 
+import { authClient } from "@/utils/auth-client";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import {
   HiOutlineUser,
@@ -10,18 +12,35 @@ import {
   HiOutlineLockClosed,
   HiOutlineLink,
 } from "react-icons/hi";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
-  const handleRegisterSubmit = (e) => {
+  const router = useRouter();
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const name = formData.get("name");
     const email = formData.get("email");
-    const photoUrl = formData.get("photoUrl"); // Capturing the new field value
+    const photoUrl = formData.get("photoUrl");
     const password = formData.get("password");
 
-    console.log("Registering user:", { name, email, photoUrl, password });
-    // Add your Firebase/MongoDB account creation endpoint trigger here
+    // console.log("Registering user:", { name, email, photoUrl, password });
+
+    const { data, error } = await authClient.signUp.email({
+      name,
+      email,
+      photoUrl,
+      password,
+      callbackURL: "/login",
+    });
+
+    if (error) {
+      toast.error(error.message || "Registration Failed");
+    }
+    if (data) {
+      toast.success("Your account has been created successfully");
+      router.push("/login");
+    }
   };
 
   const handleGoogleSignUp = () => {
@@ -68,13 +87,16 @@ export default function SignUpPage() {
           </div>
 
           {/* Form Entry Field Loops */}
-          <form onSubmit={handleRegisterSubmit} className="mt-8 space-y-4">
+          <form
+            onSubmit={handleRegisterSubmit}
+            className="mt-8 flex flex-col gap-y-5 w-full"
+          >
             {/* Full Name Input Box */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">
+            <div className="flex flex-col space-y-1.5 w-full">
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block text-left">
                 Full Name
               </label>
-              <div className="relative">
+              <div className="relative w-full">
                 <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-zinc-400 dark:text-zinc-600">
                   <HiOutlineUser size={18} />
                 </span>
@@ -89,11 +111,11 @@ export default function SignUpPage() {
             </div>
 
             {/* Email Input Box */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">
+            <div className="flex flex-col space-y-1.5 w-full">
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block text-left">
                 Email Address
               </label>
-              <div className="relative">
+              <div className="relative w-full">
                 <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-zinc-400 dark:text-zinc-600">
                   <HiOutlineMail size={18} />
                 </span>
@@ -107,12 +129,12 @@ export default function SignUpPage() {
               </div>
             </div>
 
-            {/* NEW ADDITION: Photo URL Input Box */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">
+            {/* Photo URL Input Box */}
+            <div className="flex flex-col space-y-1.5 w-full">
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block text-left">
                 Photo URL
               </label>
-              <div className="relative">
+              <div className="relative w-full">
                 <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-zinc-400 dark:text-zinc-600">
                   <HiOutlineLink size={18} />
                 </span>
@@ -126,12 +148,12 @@ export default function SignUpPage() {
               </div>
             </div>
 
-            {/* Password Input Box */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">
+            {/* Choose Password Input Box with Strict Regex Validation Rules */}
+            <div className="flex flex-col space-y-1.5 w-full">
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block text-left">
                 Choose Password
               </label>
-              <div className="relative">
+              <div className="relative w-full">
                 <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-zinc-400 dark:text-zinc-600">
                   <HiOutlineLockClosed size={18} />
                 </span>
@@ -140,16 +162,18 @@ export default function SignUpPage() {
                   name="password"
                   required
                   placeholder="••••••••"
+                  pattern="^(?=.*[a-z])(?=.*[A-Z]).{6,}$"
+                  title="Password must contain at least 6 characters, including 1 uppercase letter and 1 lowercase letter."
                   className="w-full bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/80 rounded-none pl-11 pr-4 py-3 text-sm text-zinc-800 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-teal-500 dark:focus:border-teal-500 focus:bg-white dark:focus:bg-zinc-900 transition-all duration-200"
                 />
               </div>
             </div>
 
             {/* Submit Action Button */}
-            <div className="pt-3">
+            <div className="pt-2 w-full">
               <button
                 type="submit"
-                className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold tracking-widest text-xs uppercase py-3.5 shadow-sm hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 active:scale-98 cursor-pointer"
+                className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold tracking-widest text-xs uppercase py-3.5 shadow-sm hover:shadow-lg hover:shadow-teal-500/10 transition-all duration-300 active:scale-98 cursor-pointer rounded-none"
               >
                 Register Account
               </button>
@@ -162,9 +186,7 @@ export default function SignUpPage() {
               <div className="w-full border-t border-zinc-100 dark:border-zinc-800" />
             </div>
             <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider">
-              <span className="px-3 text-zinc-400">
-                Or Sign Up With
-              </span>
+              <span className="px-3 text-zinc-400">Or Sign Up With</span>
             </div>
           </div>
 

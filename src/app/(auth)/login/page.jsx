@@ -1,19 +1,33 @@
-// src/app/login/page.jsx
 "use client";
 
+import { authClient } from "@/utils/auth-client";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
+import { toast } from "sonner";
 
 export default function SignInPage() {
-  const handleCredentialsSubmit = (e) => {
+  const router = useRouter();
+  const handleCredentialsSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
-    console.log("Signing in with:", { email, password });
-    // Add your login authentication controller logic here
+    // console.log("Signing in with:", { email, password });
+    const { data, error } = await authClient.signIn.email({
+      email,
+      password,
+      callbackURL: "/",
+    });
+    if (error) {
+      toast.error("error.message || Login failed");
+    }
+    if (data) {
+      toast.success("Welcome back! You are in now.");
+      router.push("/");
+    }
   };
 
   const handleGoogleSignIn = () => {
@@ -127,9 +141,7 @@ export default function SignInPage() {
               <div className="w-full border-t border-zinc-100 dark:border-zinc-800" />
             </div>
             <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider">
-              <span className=" px-3 text-zinc-400">
-                Or Continue With
-              </span>
+              <span className=" px-3 text-zinc-400">Or Continue With</span>
             </div>
           </div>
 

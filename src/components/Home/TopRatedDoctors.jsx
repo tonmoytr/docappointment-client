@@ -31,7 +31,7 @@ export default async function TopRatedDoctors() {
       "Dr. Stephanie Wosniack is dedicated to providing her patients with the best possible care. We at MediCare are focused on helping you. After receiving successful care for various aches and pains over the years, Dr. Wosniack found her calling to help others get well.",
   };
 
-  console.log("helooooooooooooooooooooooo", featuredDoctor);
+  // console.log("helooooooooooooooooooooooo", featuredDoctor);
 
   return (
     <section className="w-full font-sans antialiased bg-default-50 transition-colors duration-200">

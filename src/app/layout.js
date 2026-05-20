@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { Providers } from "@/lib/Providers";
+import { Toaster } from "sonner";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main className="grow">{children}</main>
           <Footer />
+          <Toaster position="top-right" />
         </Providers>
       </body>
     </html>
