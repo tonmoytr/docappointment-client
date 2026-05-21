@@ -3,13 +3,20 @@
 import { authClient } from "@/utils/auth-client";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { toast } from "sonner";
 
 export default function SignInPage() {
   const router = useRouter();
+
+  // 1. Initialize the search params reader hook
+  const searchParams = useSearchParams();
+
+  // 2. Extract the target callback path (fallback to homepage if null)
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const handleCredentialsSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -19,20 +26,20 @@ export default function SignInPage() {
     const { data, error } = await authClient.signIn.email({
       email,
       password,
-      callbackURL: "/",
     });
     if (error) {
       toast.error(error.message || "Login failed");
     }
     if (data) {
       toast.success("Welcome back! You are in now.");
-      router.push("/");
+      router.push(callbackUrl);
     }
   };
 
   const handleGoogleSignIn = async () => {
     await authClient.signIn.social({
       provider: "google",
+      callbackURL: callbackUrl,
     });
   };
 
