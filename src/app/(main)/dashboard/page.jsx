@@ -15,6 +15,7 @@ import {
 import { FiSliders, FiUser, FiTrash2, FiEdit3 } from "react-icons/fi";
 import { PersonPencil } from "@gravity-ui/icons";
 import EditAppointmentModal from "@/components/Booking/EditAppointment";
+import { DeleteAlert } from "@/components/ui/DeleteAlert";
 
 // Server side data fetching agent
 async function getUserAppointments(userId) {
@@ -196,10 +197,11 @@ export default async function DashboardPage({ searchParams }) {
                       <EditAppointmentModal appointment={appt} />
 
                       {/* Action 2: Cancel Trigger */}
-                      <button className="flex-1 py-4 md:py-0 md:h-1/2 hover:bg-red-50 dark:hover:bg-red-950/20 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer flex items-center justify-center gap-x-2">
+                      {/* <button className="flex-1 py-4 md:py-0 md:h-1/2 hover:bg-red-50 dark:hover:bg-red-950/20 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer flex items-center justify-center gap-x-2">
                         <FiTrash2 size={13} />
                         <span>Cancel</span>
-                      </button>
+                      </button> */}
+                      <DeleteAlert appointment={appt} />
                     </div>
                   </div>
                 );
