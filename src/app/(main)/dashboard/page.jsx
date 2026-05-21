@@ -16,6 +16,7 @@ import { FiSliders, FiUser, FiTrash2, FiEdit3 } from "react-icons/fi";
 import { PersonPencil } from "@gravity-ui/icons";
 import EditAppointmentModal from "@/components/Booking/EditAppointment";
 import { DeleteAlert } from "@/components/ui/DeleteAlert";
+import EditProfileModal from "@/components/ui/EditProfileModal";
 
 // Server side data fetching agent
 async function getUserAppointments(userId) {
@@ -289,10 +290,11 @@ export default async function DashboardPage({ searchParams }) {
 
               {/* Action Update Profile Trigger */}
               <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800/60 flex justify-end">
-                <button className="bg-teal-500 hover:bg-teal-600 text-white font-bold uppercase tracking-widest text-xs py-3 px-6 transition-all shadow-sm rounded-none cursor-pointer active:scale-98">
+                {/* <button className="bg-teal-500 hover:bg-teal-600 text-white font-bold uppercase tracking-widest text-xs py-3 px-6 transition-all shadow-sm rounded-none cursor-pointer active:scale-98">
                   Update Profile Information{" "}
                   <PersonPencil className="w-6 h-6 ml-2 inline " />
-                </button>
+                </button> */}
+                <EditProfileModal user={currentUser} />
               </div>
             </div>
           </div>
