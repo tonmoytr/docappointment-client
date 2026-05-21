@@ -20,7 +20,7 @@ export default async function Navbar() {
 
   const user = session?.user;
 
-  console.log("userrrrrrrrr", user);
+  // console.log("userrrrrrrrr", user);
 
   // Mock data placeholder for development layout inspection - uncomment lines above and remove this when live
   // const user = {

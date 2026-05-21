@@ -22,7 +22,7 @@ export default function SignInPage() {
       callbackURL: "/",
     });
     if (error) {
-      toast.error("error.message || Login failed");
+      toast.error(error.message || "Login failed");
     }
     if (data) {
       toast.success("Welcome back! You are in now.");
@@ -30,9 +30,10 @@ export default function SignInPage() {
     }
   };
 
-  const handleGoogleSignIn = () => {
-    console.log("Triggering Google OAuth Stream...");
-    // Add your Google Provider popup login routing here
+  const handleGoogleSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (

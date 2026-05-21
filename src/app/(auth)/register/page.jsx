@@ -1,4 +1,3 @@
-// src/app/register/page.jsx
 "use client";
 
 import { authClient } from "@/utils/auth-client";
@@ -43,8 +42,10 @@ export default function SignUpPage() {
     }
   };
 
-  const handleGoogleSignUp = () => {
-    console.log("Triggering Google account initialization...");
+  const handleGoogleSignUp = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
