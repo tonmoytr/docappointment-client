@@ -14,6 +14,7 @@ import {
 } from "react-icons/hi";
 import { FiSliders, FiUser, FiTrash2, FiEdit3 } from "react-icons/fi";
 import { PersonPencil } from "@gravity-ui/icons";
+import EditAppointmentModal from "@/components/Booking/EditAppointment";
 
 // Server side data fetching agent
 async function getUserAppointments(userId) {
@@ -29,6 +30,8 @@ export default async function DashboardPage({ searchParams }) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+
+  const currentUser = session?.user;
 
   if (!session?.user) {
     redirect("/login");
@@ -183,13 +186,14 @@ export default async function DashboardPage({ searchParams }) {
                     {/* ================= RIGHT SECTION: CONTEXT MANAGEMENT CTAs ================= */}
                     <div className="flex md:flex-col border-t md:border-t-0 md:border-l border-zinc-100 dark:border-zinc-800/80 w-full md:w-48 text-center text-xs uppercase font-bold tracking-wider shrink-0 bg-zinc-50/40 dark:bg-zinc-900/20">
                       {/* Action 1: Reschedule Trigger */}
-                      <button className="flex-1 py-4 md:py-0 md:h-1/2 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/50 text-zinc-600 dark:text-zinc-300 transition-colors border-r md:border-r-0 md:border-b border-zinc-100 dark:border-zinc-800/80 cursor-pointer flex items-center justify-center gap-x-2">
+                      {/* <button className="flex-1 py-4 md:py-0 md:h-1/2 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/50 text-zinc-600 dark:text-zinc-300 transition-colors border-r md:border-r-0 md:border-b border-zinc-100 dark:border-zinc-800/80 cursor-pointer flex items-center justify-center gap-x-2">
                         <FiEdit3
                           size={13}
                           className="text-zinc-400 dark:text-zinc-500"
                         />
                         <span>Reschedule</span>
-                      </button>
+                      </button> */}
+                      <EditAppointmentModal appointment={appt} />
 
                       {/* Action 2: Cancel Trigger */}
                       <button className="flex-1 py-4 md:py-0 md:h-1/2 hover:bg-red-50 dark:hover:bg-red-950/20 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer flex items-center justify-center gap-x-2">
