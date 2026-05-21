@@ -1,5 +1,8 @@
+import FAQSection from "@/components/Home/FAQSection";
 import HeroSlider from "@/components/Home/HeroSlider";
 import InfoRibbon from "@/components/Home/InfoRibbon";
+import PlatformPulseMatrix from "@/components/Home/PlatformPulseMatrix";
+
 import TopRatedDoctors from "@/components/Home/TopRatedDoctors";
 import { heroSlides } from "@/config/heroData";
 import { infoItems } from "@/config/infoItems";
@@ -12,6 +15,8 @@ export default function HomePage() {
         <HeroSlider slides={heroSlides} />
         <InfoRibbon infoItems={infoItems} />
         <TopRatedDoctors />
+        <PlatformPulseMatrix />
+        <FAQSection />
       </section>
     </div>
   );
