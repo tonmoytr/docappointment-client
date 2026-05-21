@@ -5,7 +5,6 @@ import { navLinks } from "@/config/navigation";
 import NavbarDesktopLinks from "./NavbarDesktopLinks";
 import NavbarMobileMenu from "./NavbarMobileMenu";
 import ThemeToggle from "../ui/ThemeToggle";
-import { authClient } from "@/utils/auth-client";
 import { redirect } from "next/navigation";
 import { auth } from "@/utils/auth";
 import { headers } from "next/headers";
@@ -13,7 +12,6 @@ import { toast } from "sonner";
 import { revalidatePath } from "next/cache";
 
 export default async function Navbar() {
-  // 2. RETRIEVE THE ACTIVE USER SESSION ON THE SERVER
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -84,18 +82,18 @@ export default async function Navbar() {
               <form
                 action={async () => {
                   "use server";
-                  // 1. Tell Better Auth on the server to clear the session cookies
+
                   await auth.api.signOut({
                     headers: await headers(),
                   });
-                  // 2. Perform a native, instant server-side redirect
+                  // toast.success("Logged Out!!");
                   revalidatePath("/");
                   redirect("/login");
                 }}
               >
                 <button
                   type="submit"
-                  className="text-xs font-bold tracking-wider text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 uppercase transition-colors cursor-pointer bg-transparent border-none p-0"
+                  className="text-xs font-bold tracking-wider text-red-500 dark:text-gray-400 hover:text-white hover:bg-red-500 hover:px-4 hover:py-2 transition-all dark:hover:text-red-400 uppercase cursor-pointer bg-transparent border-none p-0"
                 >
                   Sign Out
                 </button>

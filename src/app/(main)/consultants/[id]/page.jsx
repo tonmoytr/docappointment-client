@@ -1,6 +1,4 @@
-// src/app/consultants/[id]/page.jsx
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageTitleBanner from "@/components/ui/PageTitleBanner";
 import { getDoctorById } from "@/utils/api";
@@ -9,27 +7,40 @@ import {
   HiOutlineLocationMarker,
   HiOutlineOfficeBuilding,
   HiOutlineClock,
-  HiOutlineCurrencyDollar,
   HiOutlineShieldCheck,
 } from "react-icons/hi";
 import { FaBookmark, FaRegClock } from "react-icons/fa";
+import { auth } from "@/utils/auth";
+import { headers } from "next/headers";
+import BookingController from "@/components/Booking/BookingController";
 
-// export async function generateMetadata({ params }) {
-//   const doctor = await getDoctorById(params.id);
-//   if (!doctor) return { title: "Consultant Not Found" };
-//   return {
-//     title: `${doctor.name} | DocAppoint`,
-//     description: `Book an appointment with ${doctor.name} - ${doctor.specialty} based in ${doctor.location}.`,
-//   };
-// }
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const doctor = await getDoctorById(id);
+  if (!doctor) return { title: "Consultant Not Found" };
+  return {
+    title: `${doctor.name} | DocAppoint`,
+    description: `Book an appointment with ${doctor.name} - ${doctor.specialty} based in ${doctor.location}.`,
+  };
+}
 
 export default async function DoctorDetailsPage({ params }) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const user = session?.user;
+
   const { id } = await params;
 
-  // 2. Fetch ONLY that one single doctor from the server using the ID
   const doctor = await getDoctorById(id);
 
-  // If the doctor string id is invalid, instantly trigger Next.js's native 404 boundary
+  const currentUser = {
+    id: user?.id,
+    name: user?.name,
+    email: user?.email,
+  };
+
   if (!doctor) {
     notFound();
   }
@@ -164,12 +175,13 @@ export default async function DoctorDetailsPage({ params }) {
 
               {/* Interactive Dynamic Action Button Box (Critical Part!) */}
               <div className="pt-2 space-y-4">
-                <button
+                {/* <button
                   type="button"
                   className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold tracking-widest text-xs uppercase py-4 shadow-md hover:shadow-xl hover:shadow-teal-500/20 active:scale-[0.98] transition-all duration-300 cursor-pointer text-center block"
                 >
                   Book Appointment Now
-                </button>
+                </button> */}
+                <BookingController doctor={doctor} currentUser={currentUser} />
 
                 <button
                   type="button"
