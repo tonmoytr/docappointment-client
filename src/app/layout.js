@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main className="grow">{children}</main>
           <Footer />
-          <Toaster position="top-right" />
+          <Toaster richColors position="top-right" />
         </Providers>
       </body>
     </html>
