@@ -36,9 +36,16 @@ export default async function Navbar() {
           href="/"
           className="flex items-center space-x-2 focus:outline-none"
         >
-          <span className="w-8 h-8 rounded-lg bg-[#0A7C6E] flex items-center justify-center text-white font-bold text-lg shadow-sm">
-            D
-          </span>
+          {/* <span className="w-8 h-8 rounded-lg bg-[#0A7C6E] flex items-center justify-center text-white font-bold text-lg shadow-sm">
+            
+          </span> */}
+          <Image
+            src="/images/logo.jpg"
+            alt="Doctor Logo"
+            height={40}
+            width={40}
+            className="rounded-full"
+          />
           <span className="text-xl font-bold tracking-tight text-foreground dark:text-white">
             Doc
             <span className="text-[#0A7C6E] dark:text-[#F59E0B]">Appoint</span>
