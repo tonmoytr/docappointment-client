@@ -18,6 +18,32 @@ import EditAppointmentModal from "@/components/Booking/EditAppointment";
 import { DeleteAlert } from "@/components/ui/DeleteAlert";
 import EditProfileModal from "@/components/ui/EditProfileModal";
 
+export async function generateMetadata() {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    const userName = session?.user?.name;
+
+    if (userName) {
+      return {
+        title: `${userName}'s Dashboard | DocAppoint`,
+        description: `Manage your personal medical consultations, update booking schedules, and modify your profile credentials.`,
+      };
+    }
+  } catch (error) {
+    console.error("Failed to generate dynamic dashboard metadata:", error);
+  }
+
+  // Fallback title in case the session hasn't loaded or user is guest
+  return {
+    title: "Patient Dashboard | DocAppoint",
+    description:
+      "Manage your medical consultations, update booking schedules, and modify your profile credentials.",
+  };
+}
+
 // Server side data fetching agent
 async function getUserAppointments(userId) {
   const tokenData = await auth.api.getToken({

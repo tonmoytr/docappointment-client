@@ -29,6 +29,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function DoctorDetailsPage({ params }) {
+
+  // throw new Error("Testing my beautiful new error page layout!");
+
   const { id } = await params;
 
   const session = await auth.api.getSession({

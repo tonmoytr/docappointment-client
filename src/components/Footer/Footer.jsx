@@ -42,7 +42,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/appointments"
+                  href="/consultants"
                   className="text-sm text-default-600 hover:text-accent dark:hover:text-warning font-medium transition-colors focus:outline-none"
                 >
                   Find Doctors
@@ -50,7 +50,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/dashboard/my-bookings"
+                  href="/dashboard"
                   className="text-sm text-default-600 hover:text-accent dark:hover:text-warning font-medium transition-colors focus:outline-none"
                 >
                   Your Dashboard
