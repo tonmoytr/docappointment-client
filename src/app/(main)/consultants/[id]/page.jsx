@@ -16,7 +16,11 @@ import BookingController from "@/components/Booking/BookingController";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const doctor = await getDoctorById(id);
+  const tokenData = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const token = tokenData?.token;
+  const doctor = await getDoctorById(id, token);
   if (!doctor) return { title: "Consultant Not Found" };
   return {
     title: `${doctor.name} | DocAppoint`,
@@ -25,16 +29,19 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function DoctorDetailsPage({ params }) {
+  const { id } = await params;
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
+  const doctor = await getDoctorById(id, token);
+
   const user = session?.user;
-
-  const { id } = await params;
-
-  const doctor = await getDoctorById(id);
-
   const currentUser = {
     id: user?.id,
     name: user?.name,

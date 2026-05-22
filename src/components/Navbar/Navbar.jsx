@@ -10,6 +10,7 @@ import { auth } from "@/utils/auth";
 import { headers } from "next/headers";
 import { toast } from "sonner";
 import { revalidatePath } from "next/cache";
+import SignOutButton from "./SignOutButton";
 
 export default async function Navbar() {
   const session = await auth.api.getSession({
@@ -79,25 +80,7 @@ export default async function Navbar() {
 
               {/* Server-Side Form Trigger to handle secure logout requests cleanly */}
 
-              <form
-                action={async () => {
-                  "use server";
-
-                  await auth.api.signOut({
-                    headers: await headers(),
-                  });
-                  // toast.success("Logged Out!!");
-                  revalidatePath("/");
-                  redirect("/login");
-                }}
-              >
-                <button
-                  type="submit"
-                  className="text-xs font-bold tracking-wider text-red-500 dark:text-gray-400 hover:text-white hover:bg-red-500 hover:px-4 hover:py-2 transition-all dark:hover:text-red-400 uppercase cursor-pointer bg-transparent border-none p-0"
-                >
-                  Sign Out
-                </button>
-              </form>
+              <SignOutButton />
             </div>
           ) : (
             /* ================= UNKNOWN GUEST STATE VIEW ================= */

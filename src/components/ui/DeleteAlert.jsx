@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/utils/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -11,10 +12,15 @@ export function DeleteAlert({ appointment }) {
 
   //   console.log("object", appointment);
   const handleDelete = async () => {
+    const { data: tokenData } = await authClient.token();
+
     const res = await fetch(
-      `http://localhost:4000/appointments/${appointment._id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/appointments/${appointment._id}`,
       {
         method: "DELETE",
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`,
+        },
       },
     );
 

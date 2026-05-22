@@ -32,7 +32,9 @@ export default function SignInPage() {
     }
     if (data) {
       toast.success("Welcome back! You are in now.");
-      router.push(callbackUrl);
+      // router.refresh();
+      // router.push(callbackUrl);
+      window.location.href = callbackUrl;
     }
   };
 

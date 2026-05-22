@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Calendar, Clock, Phone, Edit3 } from "lucide-react";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { FiEdit3 } from "react-icons/fi";
+import { authClient } from "@/utils/auth-client";
 
 export default function EditAppointmentModal({ appointment }) {
   const router = useRouter();
@@ -30,12 +31,17 @@ export default function EditAppointmentModal({ appointment }) {
       appointmentTime: formData.get("appointmentTime"),
     };
 
+    const { data: tokenData } = await authClient.token();
+
     try {
       const res = await fetch(
-        `http://localhost:4000/appointments/${appointment._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/${appointment._id}`,
         {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
           body: JSON.stringify(updatedData),
         },
       );

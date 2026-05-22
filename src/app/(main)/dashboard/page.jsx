@@ -20,9 +20,22 @@ import EditProfileModal from "@/components/ui/EditProfileModal";
 
 // Server side data fetching agent
 async function getUserAppointments(userId) {
-  const res = await fetch(`http://localhost:4000/appointments/${userId}`, {
-    cache: "no-store",
+  const tokenData = await auth.api.getToken({
+    headers: await headers(),
   });
+  const token = tokenData?.token;
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/appointments/${userId}`,
+    {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    },
+  );
   const data = await res.json();
   return data;
 }

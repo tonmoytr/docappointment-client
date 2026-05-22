@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Calendar, Clock, Phone } from "lucide-react";
 import { Envelope } from "@gravity-ui/icons";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
+import { authClient } from "@/utils/auth-client";
 
 export default function BookingController({ doctor, currentUser }) {
   const router = useRouter();
@@ -48,19 +49,25 @@ export default function BookingController({ doctor, currentUser }) {
     };
     // console.log("dataaaaaaaa",bookingData);
 
+    const { data: tokenData } = await authClient.token();
+
     try {
-      const res = await fetch("http://localhost:4000/appointments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingData),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+          body: JSON.stringify(bookingData),
+        },
+      );
 
       const data = await res.json();
 
       if (res.ok && data.insertedId) {
-        toast.success(
-          `Successfully booked appointment with ${doctor.name}!`,
-        );
+        toast.success(`Successfully booked appointment with ${doctor.name}!`);
         setIsOpen(false);
       } else {
         toast.error(data.message || "Booking submission failure.");

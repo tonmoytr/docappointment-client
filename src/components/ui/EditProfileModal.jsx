@@ -5,39 +5,86 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { User, Image as ImageIcon, Edit3 } from "lucide-react";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
+import { authClient } from "@/utils/auth-client";
 
 export default function EditProfileModal({ user }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // const handleProfileUpdateSubmission = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+
+  //   const formData = new FormData(e.target);
+  //   const updatedProfile = {
+  //     name: formData.get("name"),
+  //     image: formData.get("image"),
+  //   };
+
+  //   const { data: tokenData } = await authClient.token();
+
+  //   const res = await fetch(
+  //     `${process.env.NEXT_PUBLIC_API_URL}/users/${user.id}`,
+  //     {
+  //       method: "PATCH",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         authorization: `Bearer ${tokenData?.token}`,
+  //       },
+  //       body: JSON.stringify(updatedProfile),
+  //     },
+  //   );
+
+  //   const data = await res.json();
+  //   if (res.ok && data.success) {
+  //     await authClient.getSession({
+  //       fetchOptions: {
+  //         force: true,
+  //       },
+  //     });
+
+  //     toast.success("Profile credentials updated successfully!");
+
+  //     router.refresh();
+  //     setIsOpen(false);
+  //   } else {
+  //     // If matchedCount was 0, it will display the specific warning message here
+  //     toast.error(data.message || "Failed to update profile values.");
+  //   }
+  //   setIsSubmitting(false);
+  // };
+
   const handleProfileUpdateSubmission = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const formData = new FormData(e.target);
-    const updatedProfile = {
-      name: formData.get("name"),
-      image: formData.get("image"),
-    };
+    const updatedName = formData.get("name");
+    const updatedImage = formData.get("image");
 
-    const res = await fetch(`http://localhost:4000/users/${user.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedProfile),
-    });
+    try {
+      const { data, error } = await authClient.updateUser({
+        name: updatedName,
+        image: updatedImage,
+      });
 
-    const data = await res.json();
-    if (res.ok && data.success) {
+      if (error) {
+        toast.error(error.message || "Failed to update profile values.");
+        setIsSubmitting(false);
+        return;
+      }
+
       toast.success("Profile credentials updated successfully!");
-      setIsOpen(false);
 
       router.refresh();
-    } else {
-      // If matchedCount was 0, it will display the specific warning message here
-      toast.error(data.message || "Failed to update profile values.");
+      setIsOpen(false);
+    } catch (err) {
+      console.error("Profile update error:", err);
+      toast.error("An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (
